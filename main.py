@@ -57,13 +57,13 @@ async def send_final_list(message: types.Message):
 
 @dp.message_handler()
 async def process_name(message: types.Message):
-    name = message.text.strip()
-    letter1 = name[0].upper()
-    name = letter1 + name[1:]
-    print(name)
+    names = message.text.replace(',', ' ').split()
+    for name_raw in names:
+        name = name_raw.capitalize()
+        if name in people_status:
+            people_status[name] = "✅"
+    final_list = '\n'.join([f'{key}: {value}' for key, value in people_status.items()])
 
-    if name in people_status:
-        people_status[name] = "✅"
 
 
 
